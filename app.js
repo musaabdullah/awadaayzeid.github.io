@@ -7,10 +7,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload')
 
-const dbConfig = require('./config.js');
-const router = require('./routes/pages.routes');
-const post = require('./routes/post.routes.js');
-const news = require('./routes/news.routes.js')
 var app = express();
 
 // middlware config 
@@ -25,24 +21,9 @@ app.use(fileUpload());
 
 const PORT = process.env.PORT || 3000;
 
-
-mongoose.Promise = global.Promise;
-// Connecting to the database
-mongoose.connect(dbConfig.url, {
-    useNewUrlParser: true,
-  
-}).then(() => {
-    console.log("Successfully connected to the database");    
-}).catch(err => {
-    console.log('Could not connect to the database. Exiting now...', err);
-    process.exit();
-});
-
-
-app.use(news);
-app.use(post);
-app.use('/',router);
-
+app.get('/',(req,res)=>{
+	res.render('index.html')
+})
 
 
 
